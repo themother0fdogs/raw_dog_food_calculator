@@ -2,11 +2,11 @@ import tkinter as tk
 from tkinter import messagebox
 
 root = tk.Tk()
-root.geometry("600x400")
+root.geometry("680x400")
 root.title("Raw Dog Food Calculator")
 
 welcome = tk.Label(root, text ="Welcome to the Raw Dog Food Calculator!", font = ('Arial', 16))
-welcome.pack(pady = 20)
+welcome.pack(pady = 30)
 
 inputFrame = tk.Frame(root)
 inputFrame.columnconfigure(0, weight = 1)
@@ -32,20 +32,24 @@ goalClick.set("Maintain Current Weight")
 weightLabel = tk.Label(inputFrame, text = "What is the dog's current weight?", font = ('Arial', 12))
 weightInput = tk.Entry(inputFrame, font=('Arial', 12))
 weightDrop = tk.OptionMenu(inputFrame, weightClick,*weight)
+weightDrop.configure(font=('Arial', 10), width = 10)
 
 #user input of goal
 goalLabel = tk.Label(inputFrame, text = "What is the weight goal?", font = ('Arial', 12))
 goalInput = tk.OptionMenu(inputFrame, goalClick, *goal)
+goalInput.configure(font=('Arial', 10), width=25)
 
 nameLabel.grid(row=0, column=0, sticky= tk.W + tk.E, padx=20)
 nameInput.grid(row=0, column=1, sticky= tk.W + tk.E, padx=20)
 weightLabel.grid(row=1, column=0, sticky= tk.W + tk.E, padx=20)
 weightInput.grid(row=1, column=1, sticky= tk.W + tk.E, padx=20)
-weightDrop.grid(row=1, column=2, sticky= tk.W + tk.E, padx=20)
+weightDrop.grid(row=1, column=2, sticky= tk.W + tk.E)
 goalLabel.grid(row=2, column=0, sticky= tk.W + tk.E, padx=20)
 goalInput.grid(row=2, column=1, sticky= tk.W + tk.E, padx=20)
 
 inputFrame.pack()
+
+#validate weight datatype
 def validateWeight(wt):
     try:
         int(wt)
@@ -69,7 +73,7 @@ def results():
         calc.columnconfigure(3, weight=1)
 #populates dog's name
         getName = nameInput.get()
-        name = tk.Label(calc, text=str(getName) +"'s Meal Calculations" + " to " + goalClick.get(), font=('Arial', 12))
+        name = tk.Label(calc, text=str(getName) +"'s Meal Calculations" +  "\n to " + goalClick.get(), font=('Arial', 14))
 
 #metrics for weight
 
@@ -85,7 +89,6 @@ def results():
             boneMetric = tk.Label(calc,text="grams", font = ('Arial', 12))
             liverMetric = tk.Label(calc, text="grams", font=('Arial', 12))
             organMetric = tk.Label(calc,text="grams", font = ('Arial', 12))
-
 
 #goal based on metrics
         if goalChoice == "Gain Weight" and metricInput =="Pounds":
@@ -141,27 +144,22 @@ def results():
         organOutput.grid(row=4, column=1, sticky=tk.W + tk.E, padx=10)
         organMetric.grid(row=4, column=2, sticky=tk.W + tk.E, padx=10)
 
+#secreting organs examples
         attn = tk.Label(calc, text="*Some secreting examples include: \n brain, kidney, spleen, pancreas, and testicles. ",
                         font=('Arial', 12))
         attn.grid(row=5, column=0, columnspan=50, sticky = tk.W + tk.E, pady=50)
-    else:
-        return
 
-calculateButton = tk.Button(root, text="Calculate!", font =('Arial', 12), command=results)
-calculateButton.pack(pady=20)
+#clear name and weight entries
+def clear():
+    weightInput.delete(0, 'end')
+    nameInput.delete(0, 'end')
+
+calculateButton = tk.Button(root, text="Calculate", font =('Arial', 12), width=30, fg='white', bg='cornflowerblue', command=results)
+calculateButton.pack(pady=(50, 10))
+clearButton = tk.Button(root, text="Clear", font =('Arial', 12), width = 30, fg='white', bg='royalblue', command=clear)
+clearButton.pack()
 
 calcInfo = tk.Label(root, text ="These calculations are daily recommendations.", font=('Arial', 12), fg = 'red')
-calcInfo.pack(pady=20)
+calcInfo.pack(pady=30)
 
 root.mainloop()
-
-
-"""label = tk.Label(root, text ="Welcome!", font = ('Arial', 18))
-label.pack(pady = 20)
-
-textbox = tk.Text(root, height = 2, font=('Arial', 16))
-textbox.pack()
-
-myentry = tk.Entry(root)
-myentry.pack()
-"""
